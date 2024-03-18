@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid";
+import { randomUUID as uuid } from 'crypto'
 import OrderFactory from "./order.factory";
 
 describe("Order factory unit test", () => {

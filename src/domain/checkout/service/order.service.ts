@@ -1,6 +1,6 @@
 import Order from "../entity/order";
 import OrderItem from "../entity/order_item";
-import { v4 as uuid } from "uuid";
+import { randomUUID as uuid } from 'crypto'
 import Customer from "../../customer/entity/customer";
 
 export default class OrderService {

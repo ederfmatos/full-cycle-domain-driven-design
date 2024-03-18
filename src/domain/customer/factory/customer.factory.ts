@@ -1,5 +1,5 @@
 import Customer from "../entity/customer";
-import { v4 as uuid } from "uuid";
+import { randomUUID as uuid } from 'crypto'
 import Address from "../value-object/address";
 
 export default class CustomerFactory {
