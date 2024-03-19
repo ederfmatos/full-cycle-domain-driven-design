@@ -5,18 +5,25 @@ import OrderModel from "./order.model";
 
 export default class DefaultOrderRepository implements OrderRepository {
   async update(entity: Order): Promise<void> {
-    await OrderModel.update(
-      {
-        total: entity.total(),
-        customer_id: entity.customerId,
-      },
-      {
-        where: {
-          id: entity.id,
-        },
-        fields: ['items', 'customer_id', 'total'],
-      },
-    );
+    await OrderModel.sequelize.transaction(async (transaction) => {
+      await OrderItemModel.destroy({
+        where: { order_id: entity.id },
+        transaction: transaction,
+      });
+      const items = entity.items.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        product_id: item.productId,
+        quantity: item.quantity,
+        order_id: entity.id,
+      }));
+      await OrderItemModel.bulkCreate(items, { transaction: transaction });
+      await OrderModel.update(
+        { total: entity.total() },
+        { where: { id: entity.id }, transaction: transaction }
+      );
+    });
   }
 
   async find(id: string): Promise<Order> {
