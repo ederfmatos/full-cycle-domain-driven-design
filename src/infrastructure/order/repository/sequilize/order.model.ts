@@ -9,6 +9,8 @@ import {
 } from "sequelize-typescript";
 import CustomerModel from "../../../customer/repository/sequelize/customer.model";
 import OrderItemModel from "./order-item.model";
+import Order from "../../../../domain/checkout/entity/order";
+import OrderItem from "../../../../domain/checkout/entity/order_item";
 
 @Table({
   tableName: "orders",
@@ -31,4 +33,12 @@ export default class OrderModel extends Model {
 
   @Column({ allowNull: false })
   declare total: number;
+
+  toOrder(): Order{
+    return new Order(
+      this.id, 
+      this.customer_id, 
+      this.items.map(item => new OrderItem(item.id, item.name, item.price, item.product_id, item.quantity))
+    )
+  }
 }

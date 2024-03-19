@@ -1,8 +1,34 @@
 import Order from "../../../../domain/checkout/entity/order";
+import OrderRepository from "../../../../domain/checkout/repository/order-repository";
 import OrderItemModel from "./order-item.model";
 import OrderModel from "./order.model";
 
-export default class OrderRepository {
+export default class DefaultOrderRepository implements OrderRepository {
+  async update(entity: Order): Promise<void> {
+    await OrderModel.update(
+      {
+        total: entity.total(),
+        customer_id: entity.customerId,
+      },
+      {
+        where: {
+          id: entity.id,
+        },
+        fields: ['items', 'customer_id', 'total'],
+      },
+    );
+  }
+
+  async find(id: string): Promise<Order> {
+    const orderModel = await OrderModel.findOne({ where: { id }, include: OrderItemModel });
+    return orderModel.toOrder();
+  }
+
+  async findAll(): Promise<Order[]> {
+    const orders = await OrderModel.findAll({ include: OrderItemModel });
+    return orders.map((orderModel) => orderModel.toOrder());
+  }
+
   async create(entity: Order): Promise<void> {
     await OrderModel.create(
       {
