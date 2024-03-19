@@ -1,10 +1,10 @@
 import SendEmailWhenProductIsCreatedHandler from "../../product/event/handler/send-email-when-product-is-created.handler";
 import ProductCreatedEvent from "../../product/event/product-created.event";
-import EventDispatcher from "./event-dispatcher";
+import DefaultEventDispatcher from "./default-event-dispatcher";
 
 describe("Domain events tests", () => {
   it("should register an event handler", () => {
-    const eventDispatcher = new EventDispatcher();
+    const eventDispatcher = new DefaultEventDispatcher();
     const eventHandler = new SendEmailWhenProductIsCreatedHandler();
 
     eventDispatcher.register("ProductCreatedEvent", eventHandler);
@@ -21,7 +21,7 @@ describe("Domain events tests", () => {
   });
 
   it("should unregister an event handler", () => {
-    const eventDispatcher = new EventDispatcher();
+    const eventDispatcher = new DefaultEventDispatcher();
     const eventHandler = new SendEmailWhenProductIsCreatedHandler();
 
     eventDispatcher.register("ProductCreatedEvent", eventHandler);
@@ -41,7 +41,7 @@ describe("Domain events tests", () => {
   });
 
   it("should unregister all event handlers", () => {
-    const eventDispatcher = new EventDispatcher();
+    const eventDispatcher = new DefaultEventDispatcher();
     const eventHandler = new SendEmailWhenProductIsCreatedHandler();
 
     eventDispatcher.register("ProductCreatedEvent", eventHandler);
@@ -58,7 +58,7 @@ describe("Domain events tests", () => {
   });
 
   it("should notify all event handlers", () => {
-    const eventDispatcher = new EventDispatcher();
+    const eventDispatcher = new DefaultEventDispatcher();
     const eventHandler = new SendEmailWhenProductIsCreatedHandler();
     const spyEventHandler = jest.spyOn(eventHandler, "handle");
 

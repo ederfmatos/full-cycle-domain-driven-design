@@ -1,5 +1,5 @@
-import Product from "../entity/product";
-import ProductInterface from "../entity/product.interface";
+import ProductA from "../entity/product-a";
+import { Product } from "../entity/product";
 import { randomUUID as uuid } from 'crypto'
 import ProductB from "../entity/product-b";
 
@@ -8,10 +8,10 @@ export default class ProductFactory {
     type: string,
     name: string,
     price: number
-  ): ProductInterface {
+  ): Product {
     switch (type) {
       case "a":
-        return new Product(uuid(), name, price);
+        return new ProductA(uuid(), name, price);
       case "b":
         return new ProductB(uuid(), name, price);
       default:

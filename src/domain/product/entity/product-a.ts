@@ -1,6 +1,6 @@
 import { Product } from "./product";
 
-export default class ProductB implements Product {
+export default class ProductA implements Product {
   private _id: string;
   private _name: string;
   private _price: number;
@@ -15,13 +15,13 @@ export default class ProductB implements Product {
   get id(): string {
     return this._id;
   }
-
+  
   get name(): string {
     return this._name;
   }
 
   get price(): number {
-    return this._price * 2;
+    return this._price;
   }
 
   changeName(name: string): void {

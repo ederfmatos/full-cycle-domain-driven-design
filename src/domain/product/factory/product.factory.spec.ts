@@ -7,7 +7,7 @@ describe("Product factory unit test", () => {
     expect(product.id).toBeDefined();
     expect(product.name).toBe("Product A");
     expect(product.price).toBe(1);
-    expect(product.constructor.name).toBe("Product");
+    expect(product.constructor.name).toBe("ProductA");
   });
 
   it("should create a proct type b", () => {
